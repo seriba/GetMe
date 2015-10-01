@@ -10,6 +10,8 @@ import UIKit
 
 class ListMViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    var transitionOperator = TransitionOperator()
+    
     @IBOutlet var tableView : UITableView!
     @IBOutlet var menuItem : UIBarButtonItem!
     @IBOutlet var toolbar : UIToolbar!
@@ -41,7 +43,7 @@ class ListMViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let cell = tableView.dequeueReusableCellWithIdentifier("MCell") as! MCell
         
         cell.typeImageView.image = UIImage(named: "timeline-photo")
-        cell.postLabel?.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        cell.postLabel?.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."
         cell.dateLabel.text = "2 mins ago"
         if (indexPath.row % 2 == 0) {
             cell.nameLabel.text = "Mickey Mouse"
@@ -55,8 +57,19 @@ class ListMViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
     }
     
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 121;
+    }
+    
     @IBAction func presentNavigation(sender: AnyObject?){
         performSegueWithIdentifier("presentNav", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        let toViewController = segue.destinationViewController as! UIViewController
+        self.modalPresentationStyle = UIModalPresentationStyle.Custom
+        toViewController.transitioningDelegate = self.transitionOperator
     }
     
     
